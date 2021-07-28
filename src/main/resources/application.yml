@@ -5,3 +5,7 @@ datasource:
   username: postgres
   password: 123456
   driverClassName: org.postgresql.Driver
+
+csv:
+  fileName: feladat_1.csv
+  fields: last_name,first_name,age
