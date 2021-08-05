@@ -1,4 +1,4 @@
-package com.dojo.codingdojo.processor;
+package com.dojo.codingdojo.persontransformstep.processor;
 
 import com.dojo.codingdojo.pojo.Person;
 import org.springframework.batch.item.ItemProcessor;

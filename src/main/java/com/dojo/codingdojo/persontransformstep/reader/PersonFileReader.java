@@ -1,39 +1,33 @@
-package com.dojo.codingdojo.reader;
+package com.dojo.codingdojo.persontransformstep.reader;
 
 import com.dojo.codingdojo.pojo.Person;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonReader {
-
-    @Value("${csv.fileName}")
-    private String fileName;
-
-    @Value("${csv.fields}")
-    private String[] fields;
+public class PersonFileReader {
 
     @Bean
+    @StepScope
     public FlatFileItemReader<Person> reader() {
         return new FlatFileItemReaderBuilder<Person>()
                 .name("personItemReader")
-                .resource(new ClassPathResource(fileName))
+                .resource(new ClassPathResource("feladat_1.csv"))
                 .lineMapper(provideLineMapper())
-                .linesToSkip(1)
                 .build();
     }
 
     private DelimitedLineTokenizer provideTokenizer() {
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         tokenizer.setDelimiter(DelimitedLineTokenizer.DELIMITER_TAB);
-        tokenizer.setNames(fields);
+        tokenizer.setNames(new String[]{"lastName", "firstName", "age"});
         return tokenizer;
     }
 

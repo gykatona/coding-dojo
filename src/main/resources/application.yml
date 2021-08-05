@@ -1,11 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: 1234
+    driverClassName: org.postgresql.Driver
 spring.batch.initialize-schema: always
-
-datasource:
-  jdbc-url: jdbc:postgresql://localhost:5432/postgres
-  username: postgres
-  password: 123456
-  driverClassName: org.postgresql.Driver
-
-csv:
-  fileName: feladat_1.csv
-  fields: last_name,first_name,age
+csv.fileName: feladat_1.csv
