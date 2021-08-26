@@ -1,5 +1,6 @@
 package com.dojo.codingdojo;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -10,23 +11,22 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableBatchProcessing
+@RequiredArgsConstructor
 public class CodingDojoJobConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final Step personFileWriterStep;
     private final Step transformPersonStep;
-
-    public CodingDojoJobConfiguration(JobBuilderFactory jobBuilderFactory, Step personFileWriterStep, Step transformPersonStep) {
-        this.jobBuilderFactory = jobBuilderFactory;
-        this.personFileWriterStep = personFileWriterStep;
-        this.transformPersonStep = transformPersonStep;
-    }
+    private final Step remoteDumpStep;
+    private final Step remoteLoadStep;
 
     @Bean
     protected Job codingDojoJob() {
         return jobBuilderFactory
                 .get("coding-dojo")
                 .incrementer(new RunIdIncrementer())
-                .start(personFileWriterStep)
+                .start(remoteDumpStep)
+                .next(remoteLoadStep)
+                .next(personFileWriterStep)
                 .next(transformPersonStep)
                 .build();
     }
