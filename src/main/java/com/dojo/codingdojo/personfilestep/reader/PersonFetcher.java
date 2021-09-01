@@ -1,7 +1,7 @@
 package com.dojo.codingdojo.personfilestep.reader;
 
 import com.dojo.codingdojo.pojo.Person;
-import com.dojo.codingdojo.repository.PersonRepository;
+import com.dojo.codingdojo.repository.PrimaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.item.ItemReader;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PersonFetcher implements ItemReader<Person> {
 
-    private final PersonRepository personRepository;
+    private final PrimaryRepository personRepository;
     private int nextPersonIndex;
     private List<Person> personList;
 
