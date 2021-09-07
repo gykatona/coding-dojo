@@ -2,6 +2,7 @@ spring:
   feign:
     name: dojo-api
     url: https://my.api.mockaroo.com
+    key: 63304c70
   datasource:
     url: jdbc:postgresql://localhost:5433/postgres
     username: postgres

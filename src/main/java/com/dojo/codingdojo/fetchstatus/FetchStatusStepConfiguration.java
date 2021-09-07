@@ -1,34 +1,34 @@
-package com.dojo.codingdojo.fetchmarketplace;
+package com.dojo.codingdojo.fetchstatus;
 
 import com.dojo.codingdojo.fetchmarketplace.reader.MarketplaceFetcher;
 import com.dojo.codingdojo.fetchmarketplace.writer.MarketplaceWriter;
+import com.dojo.codingdojo.fetchstatus.reader.StatusFetcher;
+import com.dojo.codingdojo.fetchstatus.writer.StatusWriter;
+import com.dojo.codingdojo.pojo.Listing;
 import com.dojo.codingdojo.pojo.Marketplace;
-import com.dojo.codingdojo.pojo.Source;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
 @RequiredArgsConstructor
-public class FetchMarketplaceStepConfiguration {
+public class FetchStatusStepConfiguration {
     private final StepBuilderFactory stepBuilderFactory;
-    private final MarketplaceFetcher marketplaceFetcher;
-    private final MarketplaceWriter marketplaceWriter;
+    private final StatusFetcher statusFetcher;
+    private final StatusWriter statusWriter;
 
     @Bean
-    public Step fetchMarketplaceStep() {
+    public Step fetchStatusStep() {
         return stepBuilderFactory
-                .get("fetchMarketplaceStep")
-                .<Marketplace, Marketplace>chunk(100)
+                .get("fetchStatusStep")
+                .<Listing, Listing>chunk(100)
                 .faultTolerant()
                 .skipLimit(3)
                 .skip(Exception.class)
-                .reader(marketplaceFetcher)
-                .writer(marketplaceWriter)
+                .reader(statusFetcher)
+                .writer(statusWriter)
                 .build();
     }
 }

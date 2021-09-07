@@ -19,17 +19,19 @@ public class CodingDojoJobConfiguration {
     private final Step remoteDumpStep;
     private final Step remoteLoadStep;
     private final Step fetchMarketplaceStep;
+    private final Step fetchStatusStep;
 
     @Bean
     protected Job codingDojoJob() {
         return jobBuilderFactory
                 .get("coding-dojo")
                 .incrementer(new RunIdIncrementer())
-                .start(fetchMarketplaceStep)
-//                .start(remoteDumpStep)
-//                .next(remoteLoadStep)
-//                .next(personFileWriterStep)
-//                .next(transformPersonStep)
+                .start(remoteDumpStep)
+                .next(remoteLoadStep)
+                .next(personFileWriterStep)
+                .next(transformPersonStep)
+                .next(fetchMarketplaceStep)
+                .next(fetchStatusStep)
                 .build();
     }
 }

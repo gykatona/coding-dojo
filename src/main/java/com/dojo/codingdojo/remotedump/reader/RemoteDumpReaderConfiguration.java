@@ -16,7 +16,7 @@ import java.util.Map;
 @Configuration
 public class RemoteDumpReaderConfiguration {
     private static final String PREPARE_COLUMNS = "id, first_name, last_name, age";
-    private static final String PREPARE_TABLE_NAME = "remote_source";
+    private static final String PREPARE_TABLE_NAME = "people_to_csv";
     private static final int DEFAULT_SIZE = 30;
 
     @Bean
