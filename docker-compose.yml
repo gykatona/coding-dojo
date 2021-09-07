@@ -42,3 +42,17 @@ services:
       - ./flyway/remote/sql:/flyway/sql
     depends_on:
       - postgres-remote
+  ftpd_server:
+    image: stilliard/pure-ftpd
+    container_name: dojo-ftpd
+    ports:
+      - "9021:21"
+    volumes:
+      - "/folder_on_disk/data:/home/username/"
+      - "/folder_on_disk/passwd:/etc/pure-ftpd/passwd"
+    environment:
+      PUBLICHOST: "localhost"
+      FTP_USER_NAME: user
+      FTP_USER_PASS: pass
+      FTP_USER_HOME: /home/username
+    restart: always

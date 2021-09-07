@@ -20,6 +20,7 @@ public class CodingDojoJobConfiguration {
     private final Step remoteLoadStep;
     private final Step fetchMarketplaceStep;
     private final Step fetchStatusStep;
+    private final Step ftpUploadStep;
 
     @Bean
     protected Job codingDojoJob() {
@@ -32,6 +33,7 @@ public class CodingDojoJobConfiguration {
                 .next(transformPersonStep)
                 .next(fetchMarketplaceStep)
                 .next(fetchStatusStep)
+                .next(ftpUploadStep)
                 .build();
     }
 }

@@ -17,3 +17,9 @@ remote:
     username: postgres
     password: 1234
   file: output/remote_persons.csv
+
+ftp:
+  host: localhost
+  port: 9021
+  username: user
+  password: pass
