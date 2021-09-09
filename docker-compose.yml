@@ -48,8 +48,8 @@ services:
     ports:
       - "9021:21"
     volumes:
-      - "/folder_on_disk/data:/home/username/"
-      - "/folder_on_disk/passwd:/etc/pure-ftpd/passwd"
+      - "/tmp/data:/home/username/"
+      - "/tmp/passwd:/etc/pure-ftpd/passwd"
     environment:
       PUBLICHOST: "localhost"
       FTP_USER_NAME: user

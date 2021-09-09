@@ -1,5 +1,6 @@
 package com.dojo.codingdojo;
 
+import com.dojo.codingdojo.ftpupload.StepRunDecider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -33,7 +34,8 @@ public class CodingDojoJobConfiguration {
                 .next(transformPersonStep)
                 .next(fetchMarketplaceStep)
                 .next(fetchStatusStep)
-                .next(ftpUploadStep)
+                .next(new StepRunDecider()).on("RUN").to(ftpUploadStep)
+                .end()
                 .build();
     }
 }
