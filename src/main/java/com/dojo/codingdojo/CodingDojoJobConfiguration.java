@@ -1,11 +1,15 @@
 package com.dojo.codingdojo;
 
-import com.dojo.codingdojo.ftpupload.StepRunDecider;
+import com.dojo.codingdojo.common.CustomExitStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,12 +34,18 @@ public class CodingDojoJobConfiguration {
                 .incrementer(new RunIdIncrementer())
                 .start(remoteDumpStep)
                 .next(remoteLoadStep)
-                .next(personFileWriterStep)
+                .on(CustomExitStatus.FTP.getExitCode()).to(ftpUploadStep).next(remainingSteps()).from(remoteLoadStep)
+                .on(ExitStatus.COMPLETED.getExitCode()).to(remainingSteps()).from(remoteLoadStep)
+                .end()
+                .build();
+    }
+
+    private Flow remainingSteps() {
+        return new FlowBuilder<SimpleFlow>("smart-ftp-flow")
+                .start(personFileWriterStep)
                 .next(transformPersonStep)
                 .next(fetchMarketplaceStep)
                 .next(fetchStatusStep)
-                .next(new StepRunDecider()).on("RUN").to(ftpUploadStep)
-                .end()
-                .build();
+                .end();
     }
 }

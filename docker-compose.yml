@@ -47,6 +47,7 @@ services:
     container_name: dojo-ftpd
     ports:
       - "9021:21"
+      - "30000-30009:30000-30009"
     volumes:
       - "/tmp/data:/home/username/"
       - "/tmp/passwd:/etc/pure-ftpd/passwd"
