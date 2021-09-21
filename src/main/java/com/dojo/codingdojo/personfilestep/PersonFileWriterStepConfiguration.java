@@ -20,7 +20,7 @@ public class PersonFileWriterStepConfiguration {
     @Bean
     public Step personFileWriterStep() {
         return stepBuilderFactory
-                .get("write person to file")
+                .get("personFileWriterStep")
                 .<Person, Person>chunk(100)
                 .reader(personFetcher)
                 .writer(personFlatFileWriter)

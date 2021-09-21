@@ -1,0 +1,25 @@
+spring:
+  feign:
+    name: dojo-api
+    url: https://my.api.mockaroo.com
+    key: 63304c70
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: 1234
+    driverClassName: org.postgresql.Driver
+spring.batch.initialize-schema: always
+csv.fileName: feladat_1.csv
+
+remote:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/postgres
+    username: postgres
+    password: 1234
+  file: output/remote_persons.csv
+
+ftp:
+  host: localhost
+  port: 9021
+  username: user
+  password: pass

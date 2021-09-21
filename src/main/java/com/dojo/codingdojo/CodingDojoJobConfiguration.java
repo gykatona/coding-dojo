@@ -40,7 +40,8 @@ public class CodingDojoJobConfiguration {
                 .build();
     }
 
-    private Flow remainingSteps() {
+    @Bean
+    public Flow remainingSteps() {
         return new FlowBuilder<SimpleFlow>("smart-ftp-flow")
                 .start(personFileWriterStep)
                 .next(transformPersonStep)
