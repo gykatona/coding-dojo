@@ -1,5 +1,7 @@
 package com.dojo.codingdojo;
 
+import com.dojo.codingdojo.client.DojoClient;
+import com.dojo.codingdojo.pojo.Listing;
 import com.dojo.codingdojo.pojo.Person;
 import com.dojo.codingdojo.pojo.Source;
 import com.dojo.codingdojo.repository.PrimaryRepository;
@@ -8,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.Step;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.test.AssertFile;
 import org.springframework.batch.test.JobLauncherTestUtils;
@@ -38,20 +39,18 @@ public class CodingDojoJobConfigurationTest {
     @MockBean
     private JdbcPagingItemReader<Source> remoteDumpReader;
 
-    @Test
-    public void testRemoteDumpStep() throws Exception {
-        Mockito.when(remoteDumpReader.read())
-                .thenReturn(createSource());
+    @MockBean
+    private DojoClient dojoClient;
 
-        JobExecution jobExecution = jobLauncherTestUtils.launchStep("remoteDumpStep");
+    @Test
+    public void testFetchStatusStep() throws Exception {
+        Mockito.when(dojoClient.getListings("63304c70"))
+                .thenReturn(List.of(createListing()));
+
+        JobExecution jobExecution = jobLauncherTestUtils.launchStep("fetchStatusStep");
 
         Assert.assertEquals("COMPLETED", jobExecution.getExitStatus().getExitCode());
 
-        String EXPECTED_FILE = "src/test/resources/test_remote_persons.csv";
-        String OUTPUT_FILE = "output/remote_persons.csv";
-
-        AssertFile.assertFileEquals(new FileSystemResource(EXPECTED_FILE),
-                new FileSystemResource(OUTPUT_FILE));
     }
 
     @Test
@@ -72,6 +71,10 @@ public class CodingDojoJobConfigurationTest {
 
     private Person createPersonList() {
         return new Person("Mikorka", "Kalman", 20);
+    }
+
+    private Listing createListing() {
+        return new Listing("test-status");
     }
 
     private Source createSource() {
