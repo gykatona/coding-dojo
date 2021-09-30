@@ -1,5 +1,3 @@
-package com.dojo.codingdojo.common;
-
 import org.springframework.batch.core.ExitStatus;
 
 public class CustomExitStatus {

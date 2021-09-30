@@ -1,6 +1,5 @@
 package com.dojo.codingdojo;
 
-import com.dojo.codingdojo.common.CustomExitStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
