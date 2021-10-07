@@ -1,4 +1,4 @@
-package com.dojo.codingdojo.common;
+package common;
 
 import org.springframework.batch.core.ExitStatus;
 

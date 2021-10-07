@@ -1,7 +1,8 @@
 package com.dojo.codingdojo.remoteload;
 
-import com.dojo.codingdojo.common.CustomExitStatus;
+
 import com.dojo.codingdojo.remoteload.repository.RemoteLoadRepository;
+import common.CustomExitStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ExitStatus;
