@@ -13,12 +13,12 @@ import static org.springframework.batch.item.file.transform.DelimitedLineTokeniz
 
 @Configuration
 public class RemoteDumpWriterConfiguration {
-    @Value("${remote.file}")
-    private String fileName;
+//    @Value("${remote.file}")
+//    private String fileName;
 
     @Bean
     @StepScope
-    public FlatFileItemWriter<Source> remoteDumpWriter() {
+    public FlatFileItemWriter<Source> remoteDumpWriter( @Value("#{stepExecutionContext[opFileName]}") String fileName) {
         return new FlatFileItemWriterBuilder<Source>()
                 .name("remoteDumpWriter")
                 .resource(new FileSystemResource(fileName))

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(value = "${spring.feign.name}", url = "${spring.feign.url}")
+@FeignClient(value = "dojo", url = "${spring.feign.url}")
 public interface DojoClient {
     @RequestMapping(method = RequestMethod.GET, value = "/listingStatus")
     List<Listing> getListings(@RequestParam String key);

@@ -1,5 +1,6 @@
 package com.dojo.codingdojo;
 
+import com.dojo.codingdojo.common.CustomExitStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
@@ -20,7 +21,7 @@ public class CodingDojoJobConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final Step personFileWriterStep;
     private final Step transformPersonStep;
-    private final Step remoteDumpStep;
+    private final Step partitionRemoteDumpStep;
     private final Step remoteLoadStep;
     private final Step fetchMarketplaceStep;
     private final Step fetchStatusStep;
@@ -31,7 +32,7 @@ public class CodingDojoJobConfiguration {
         return jobBuilderFactory
                 .get("coding-dojo")
                 .incrementer(new RunIdIncrementer())
-                .start(remoteDumpStep)
+                .start(partitionRemoteDumpStep)
                 .next(remoteLoadStep)
                 .on(CustomExitStatus.FTP.getExitCode()).to(ftpUploadStep).next(remainingSteps()).from(remoteLoadStep)
                 .on(ExitStatus.COMPLETED.getExitCode()).to(remainingSteps()).from(remoteLoadStep)
