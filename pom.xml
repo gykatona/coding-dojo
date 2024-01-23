@@ -12,7 +12,7 @@
 	<artifactId>coding-dojo</artifactId>
 	<version>1.0.0</version>
 	<name>coding-dojo</name>
-	<description>Demo project for Spring Batch</description>
+	<description>Demo p      roject for Spring Batch</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
